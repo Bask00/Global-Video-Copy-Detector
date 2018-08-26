@@ -1,0 +1,113 @@
+#characteristics extractor for Ordinal Measurement Descriptor (OMD)
+
+import numpy as np
+import cv2
+#para revisar las carpetas:
+import glob
+
+def characteristics_extractor( video ):
+	"Extract characteristics of a video every 10 frames"
+	counter = 0;
+
+	if video.isOpened():
+		width = video.get(cv2.CAP_PROP_FRAME_WIDTH);
+		height = video.get(cv2.CAP_PROP_FRAME_HEIGHT);
+		n_hor_bins = 8; n_ver_bins = 4;
+		zone_width = int(width/n_hor_bins);
+		zone_height = int(height/n_ver_bins);
+		print(zone_width);
+		print(zone_height);
+		result = [];
+		img_avrg = [];
+		ind_cnt = 0;
+
+	while(video.isOpened()):
+		ret, frame = video.read();
+		if ret==True:
+			if counter%3000==0:
+				print(counter);
+			if counter%10==0:
+				gray_image = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY);
+				sum = 0;
+				for j in range(0, n_ver_bins):
+					for i in range(0, n_hor_bins):
+						for l in range(j*zone_height, (j+1)*zone_height):
+							for k in range(i*zone_width, (i+1)*zone_width):
+								sum=sum+gray_image[l,k];
+
+						sum=sum/(zone_width*zone_height);
+						img_avrg.append(sum);
+						sum=0;
+
+				indices = range(n_hor_bins*n_ver_bins);
+				img_avrg, indices = zip(*sorted(zip(img_avrg, indices)));
+
+				result.append(indices);
+				img_avrg = [];
+				
+			counter = counter+1;
+
+		else:
+			break;
+
+	return result;
+
+
+commercials = glob.glob("commercials/*.mpg");
+commercials.sort();
+
+television = glob.glob("television/*.mp4");
+television.sort();
+
+
+#for vid in commercials:
+#	cap = cv2.VideoCapture(vid);
+#	print("reading: " + vid);
+#	vid_extract = characteristics_extractor( cap );
+#	cap.release();
+#	print("finished reading: " + vid);
+#	file_name = vid.split("\\")[1].split(".")[0];
+#	file_name = "extract_com/"+file_name+".txt";
+#	print("saving in: " + file_name);
+#	file = open(file_name,"w");
+#	for counter, extract in enumerate(vid_extract):
+#		if counter:
+#			file.write('\n');
+#		linea = '-'.join(str(e) for e in extract);
+#		file.write(linea);
+#	file.close();
+
+#for vid in television:
+#	cap = cv2.VideoCapture(vid);
+#	print("reading: " + vid);
+#	vid_extract = characteristics_extractor( cap );
+#	cap.release();
+#	print("finished reading: " + vid);
+#	file_name = vid.split("\\")[1].split(".")[0];
+#	file_name = "extract_tv/"+file_name+".txt";
+#	print("saving in: " + file_name);
+#	file = open(file_name,"w");
+#	for counter, extract in enumerate(vid_extract):
+#		if counter:
+#			file.write('\n');
+#		linea = '-'.join(str(e) for e in extract);
+#		file.write(linea);
+#	file.close();
+
+
+#In case of extracting one by one use the "ind" value to change the video:
+#ind = 0;
+#cap = cv2.VideoCapture(television[ind]);
+#vid_extract = characteristics_extractor( cap );
+#cap.release();
+#file_name = television[ind].split("\\")[1].split(".")[0];
+#file_name = "extract_tv/"+file_name+".txt";
+#print(file_name);
+#file = open(file_name,"w");
+#for counter, extract in enumerate(vid_extract):
+#	if counter:
+#		file.write('\n');
+#	line = '-'.join(str(e) for e in extract);
+#	file.write(line);
+
+#file.close();
