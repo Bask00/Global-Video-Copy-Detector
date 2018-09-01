@@ -3,7 +3,7 @@
 
 ## Detect copy between two videos using Global Characteristics (Ordinal Measurement Descriptor) of their images
 
-### OpenCV2 Required
+### OpenCV 2 Required
 ### Tested in python 3.6.5
 
 ### For the example, download the other videos (television) from https://drive.google.com/file/d/1PTmOOJiUPV34WixoT2kpKhYTYNYGZo2L/view?usp=sharing and put them in the television folder.
