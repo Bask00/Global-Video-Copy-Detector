@@ -1,6 +1,5 @@
 # Global-Video-Copy-Detector
 ## Detect copy between two videos based with Global Characteristics (Ordinal Measurement Descriptor) using Python
-## Videos are television 768x432 commercials 320x180
 
 ## OpenGL Required (tested in version 3)
 ## Tested in python 3.6.5
@@ -17,3 +16,5 @@
 # Running the scripts
 ## 1 python Extract_Vid
 ## 2 python Copy_Detector
+
+## In case of using different videos, be sure to check the proper call to the folders, extension of videos, the sizes of the cell and adjust the pace that images are taken (for example if you use a 60 fps video, either modify the rate that images are extracted, or change the way the minutes of a video are calculated when a copy is detected)
