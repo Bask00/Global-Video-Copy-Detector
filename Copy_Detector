@@ -1,5 +1,7 @@
 import glob
 
+#return the sums of total different element in the arrays
+#P and Q are arrays
 def Hamming_Distance(P, Q):
 	length = len(P);
 	result = 0;
@@ -11,6 +13,9 @@ def Hamming_Distance(P, Q):
 	return result;
 
 
+#return the images that are similar in both videos in an array, the format is [distance, minutevideo1, minutevideo2]
+#Asumes that the original video is in 30fps
+#P and Q are characteristics extracted from a video each, threshold is the max distance permited to check a copy
 def Detect_Copy(P, Q, threshold_dist):
 	result = [];
 	for ind1, img1 in enumerate(P):
@@ -19,13 +24,13 @@ def Detect_Copy(P, Q, threshold_dist):
 			dist = Hamming_Distance(img1, img2);
 			if dist <= threshold_dist:
 				result_aux.append(dist);
-				result_aux.append(ind1);
+				result_aux.append(round(ind1/(3*60), 2));
 				result_aux.append(round(ind2/(3*60), 2));
 				result.append(result_aux);
 
 	return result;
 	
-
+#Read the file, each line is an image, OMD, values are separated by "-"
 def File_to_Array(file):
 	print("Reading: " + file);
 	file = open(file,"r");
@@ -41,6 +46,8 @@ def File_to_Array(file):
 	file.close();
 	return vector_vid;
 
+
+#MAIN
 
 commercials = glob.glob("extract_com/*.txt");
 commercials.sort();

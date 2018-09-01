@@ -2,8 +2,9 @@
 
 import numpy as np
 import cv2
-#para revisar las carpetas:
 import glob
+
+#Extract characteristics of a video, uses only an image every 10 frames
 
 def characteristics_extractor( video ):
 	"Extract characteristics of a video every 10 frames"
@@ -24,8 +25,6 @@ def characteristics_extractor( video ):
 	while(video.isOpened()):
 		ret, frame = video.read();
 		if ret==True:
-			if counter%3000==0:
-				print(counter);
 			if counter%10==0:
 				gray_image = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY);
 				sum = 0;
@@ -53,6 +52,9 @@ def characteristics_extractor( video ):
 	return result;
 
 
+#Get the file names of the videos
+#In case of using a different extension, don't forget to change the extension here
+
 commercials = glob.glob("commercials/*.mpg");
 commercials.sort();
 
@@ -60,39 +62,39 @@ television = glob.glob("television/*.mp4");
 television.sort();
 
 
-#for vid in commercials:
-#	cap = cv2.VideoCapture(vid);
-#	print("reading: " + vid);
-#	vid_extract = characteristics_extractor( cap );
-#	cap.release();
-#	print("finished reading: " + vid);
-#	file_name = vid.split("\\")[1].split(".")[0];
-#	file_name = "extract_com/"+file_name+".txt";
-#	print("saving in: " + file_name);
-#	file = open(file_name,"w");
-#	for counter, extract in enumerate(vid_extract):
-#		if counter:
-#			file.write('\n');
-#		linea = '-'.join(str(e) for e in extract);
-#		file.write(linea);
-#	file.close();
+for vid in commercials:
+	cap = cv2.VideoCapture(vid);
+	print("reading: " + vid);
+	vid_extract = characteristics_extractor( cap );
+	cap.release();
+	print("finished reading: " + vid);
+	file_name = vid.split("\\")[1].split(".")[0];
+	file_name = "extract_com/"+file_name+".txt";
+	print("saving in: " + file_name);
+	file = open(file_name,"w");
+	for counter, extract in enumerate(vid_extract):
+		if counter:
+			file.write('\n');
+		linea = '-'.join(str(e) for e in extract);
+		file.write(linea);
+	file.close();
 
-#for vid in television:
-#	cap = cv2.VideoCapture(vid);
-#	print("reading: " + vid);
-#	vid_extract = characteristics_extractor( cap );
-#	cap.release();
-#	print("finished reading: " + vid);
-#	file_name = vid.split("\\")[1].split(".")[0];
-#	file_name = "extract_tv/"+file_name+".txt";
-#	print("saving in: " + file_name);
-#	file = open(file_name,"w");
-#	for counter, extract in enumerate(vid_extract):
-#		if counter:
-#			file.write('\n');
-#		linea = '-'.join(str(e) for e in extract);
-#		file.write(linea);
-#	file.close();
+for vid in television:
+	cap = cv2.VideoCapture(vid);
+	print("reading: " + vid);
+	vid_extract = characteristics_extractor( cap );
+	cap.release();
+	print("finished reading: " + vid);
+	file_name = vid.split("\\")[1].split(".")[0];
+	file_name = "extract_tv/"+file_name+".txt";
+	print("saving in: " + file_name);
+	file = open(file_name,"w");
+	for counter, extract in enumerate(vid_extract):
+		if counter:
+			file.write('\n');
+		linea = '-'.join(str(e) for e in extract);
+		file.write(linea);
+	file.close();
 
 
 #In case of extracting one by one use the "ind" value to change the video:
