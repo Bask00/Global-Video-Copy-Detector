@@ -14,6 +14,6 @@
 # Copy_Detector
 ## Detect the images from the different videos that are close to each other, a threshold value is used to decide the max distance that copies candidates are selected. The result are in the folder "results" where each file is named after the video of the folder commercial in each file, first is the name of the video in the folder television that the commercial is compared to, and then are the images that a copy was detected, the format is "distance-minuteInTheCommercial-minuteInTheTelevision"
 
-#Running the scripts
+# Running the scripts
 ## 1 python Extract_Vid
 ## 2 python Copy_Detector
