@@ -1,7 +1,7 @@
 # Global-Video-Copy-Detector
 ## By Benjamin Soto K.
 
-## Detect copy between two videos based with Global Characteristics (Ordinal Measurement Descriptor) using Python
+## Detect copy between two videos using Global Characteristics (Ordinal Measurement Descriptor) of their images
 
 ## OpenGL Required (tested in version 3)
 ## Tested in python 3.6.5
